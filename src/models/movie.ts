@@ -1,13 +1,15 @@
 import { Field, ObjectType } from "type-graphql";
 
 @ObjectType()
-export class Todo {
-  @Field()
-  userId: number;
+export class Movie {
   @Field()
   id: number;
   @Field()
   title: string;
   @Field()
-  completed: boolean;
+  overview: string;
+  @Field()
+  poster_path: string; 
+  @Field()
+  vote_average: number; 
 }

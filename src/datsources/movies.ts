@@ -1,18 +1,18 @@
-import { RESTDataSource } from "apollo-datasource-rest";
-import { Todo } from "src/models/movie";
+import { RESTDataSource, RequestOptions } from "apollo-datasource-rest";
+import { Movie } from "src/models/movie";
+import { env } from "process";
+export class MovieDataSource extends RESTDataSource {
 
-export class TodoDataSource extends RESTDataSource {
-    constructor() {
-      super();
+  baseURL = 'https://api.themoviedb.org/3'
+
+    async getMovie(): Promise<Movie[]> {
+      const movies = await this.get('/movie/popular?page=1')
+      return movies.results
     }
-  
-    async getTodo(): Promise<Todo[]> {
-      return [
-        {
-          "userId": 1,
-          "id": 1,
-          "title": "delectus aut autem",
-          "completed": false
-        }]
+
+    willSendRequest(request: RequestOptions) {
+      const api_key = env.API_KEY || ""
+      request.params.set('api_key', api_key);
+      request.params.set('language', 'en-US')
     }
 }

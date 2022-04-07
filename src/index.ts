@@ -3,8 +3,8 @@ import { ApolloServer } from "apollo-server-express";
 import * as Express from "express";
 import { buildSchema, Resolver, Query, Ctx } from "type-graphql";
 import { Context } from "./types/Context";
-import { Todo } from "./models/movie";
-import { TodoDataSource } from "./datsources/movies";
+import { Movie } from "./models/movie";
+import { MovieDataSource } from "./datsources/movies";
 
 @Resolver()
 class HelloResolver {
@@ -15,18 +15,18 @@ class HelloResolver {
 }
 
 @Resolver()
-export class TodoResolver {
-  @Query(() => [Todo])
-  async todo(@Ctx() context: Context) {
+export class MovieResolver {
+  @Query(() => [Movie])
+  async movie(@Ctx() context: Context) {
     console.log("WORKING")
     const startTime = new Date();
 
-    const todos = await context.dataSources.todoDataSource.getTodo();
-    console.log(todos)
+    const movies = await context.dataSources.movieDataSource.getMovie();
+    console.log(movies)
     console.log(
       `todos query took ${new Date().getTime() - startTime.getTime()}ms`
     );
-    return todos;
+    return movies;
 
 
   }
@@ -35,11 +35,11 @@ export class TodoResolver {
 
 const main = async () => {
   const schema = await buildSchema({
-    resolvers: [HelloResolver, TodoResolver]
+    resolvers: [HelloResolver, MovieResolver]
   });
 
   const apolloServer = new ApolloServer({ schema, dataSources: () => ({
-    TodoDataSource: new TodoDataSource(),
+    movieDataSource: new MovieDataSource(),
   }), 
 });
 
