@@ -1,10 +1,10 @@
 import "reflect-metadata";
 import { ApolloServer } from "apollo-server-express";
 import * as Express from "express";
-import { buildSchema, Resolver, Query, Ctx } from "type-graphql";
-import { Context } from "./types/Context";
-import { Movie } from "./models/movie";
+import { buildSchema, Resolver, Query } from "type-graphql";
+import { MovieResolver } from "./resolvers/movies";
 import { MovieDataSource } from "./datsources/movies";
+import * as env from "dotenv"
 
 @Resolver()
 class HelloResolver {
@@ -14,34 +14,19 @@ class HelloResolver {
   }
 }
 
-@Resolver()
-export class MovieResolver {
-  @Query(() => [Movie])
-  async movie(@Ctx() context: Context) {
-    console.log("WORKING")
-    const startTime = new Date();
 
-    const movies = await context.dataSources.movieDataSource.getMovie();
-    console.log(movies)
-    console.log(
-      `todos query took ${new Date().getTime() - startTime.getTime()}ms`
-    );
-    return movies;
-
-
-  }
-}
 
 
 const main = async () => {
+  env.config()
   const schema = await buildSchema({
     resolvers: [HelloResolver, MovieResolver]
   });
 
   const apolloServer = new ApolloServer({ schema, dataSources: () => ({
     movieDataSource: new MovieDataSource(),
-  }), 
-});
+  }),
+  });
 
   await apolloServer.start()
   const app = Express();
