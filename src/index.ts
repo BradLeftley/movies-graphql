@@ -2,6 +2,9 @@ import "reflect-metadata";
 import { ApolloServer } from "apollo-server-express";
 import * as Express from "express";
 import { buildSchema, Resolver, Query } from "type-graphql";
+import { MovieResolver } from "./resolvers/movies";
+import { MovieDataSource } from "./datsources/movies";
+import * as env from "dotenv"
 
 @Resolver()
 class HelloResolver {
@@ -11,12 +14,20 @@ class HelloResolver {
   }
 }
 
+
+
+
 const main = async () => {
+  env.config()
   const schema = await buildSchema({
-    resolvers: [HelloResolver]
+    resolvers: [HelloResolver, MovieResolver]
   });
 
-  const apolloServer = new ApolloServer({ schema });
+  const apolloServer = new ApolloServer({ schema, dataSources: () => ({
+    movieDataSource: new MovieDataSource(),
+  }),
+  });
+
   await apolloServer.start()
   const app = Express();
 
