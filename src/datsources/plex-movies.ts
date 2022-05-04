@@ -14,24 +14,13 @@ export class PlexMoviesDataSource extends RESTDataSource {
     const resultUnformatted = convert.xml2json(movies, {compact: true, spaces: 4});
     const resultFormatted = JSON.parse(resultUnformatted)
 
-     return resultFormatted.MediaContainer.Video.map((movie: { _attributes: any; Media: any; imdb_id: any}) => {
-        
-        const value = movie.Media.Part._attributes.file
-   
-        const imdb_id = value.match(/\{(.*?)\}/)[1].slice(5)
+     return resultFormatted.MediaContainer.Video.map(async (movie: { _attributes: any; Media: any; image: any; title: any}) => {
+        const movieYear = movie._attributes.year
+        const imageUrl = await this.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.API_KEY}&language=en-US&page=1&query=${movie._attributes.title}&include_adult=false&year=${movieYear}`)
+        const url = imageUrl.results[0].poster_path || ''
+        movie._attributes.image = 'https://image.tmdb.org/t/p/w220_and_h330_face/'+ url
 
-      movie._attributes.imdb_id = imdb_id
       return  movie._attributes
-        
      });
   }
-
-//   willSendRequest(request: RequestOptions) {
-//     request.params.set('api_key', `${process.env.API_KEY}`);
-//       request.params.set('language', 'en-US')
-//   }
-//   async searchMovies(query: string): Promise<Movie[]> {
-//     const movies = await this.get('/search/movie?page_1&include_adult=false', {query})
-//     return movies.results
-//   }
 }

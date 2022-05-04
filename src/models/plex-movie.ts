@@ -7,5 +7,5 @@ export class PlexMovie {
   @Field()
   overview: string;
   @Field()
-  imdb_id: string
+  image: string
 }
