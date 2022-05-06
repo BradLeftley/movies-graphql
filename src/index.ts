@@ -7,6 +7,7 @@ import { MovieDataSource } from "./datsources/movies";
 import * as env from "dotenv"
 import { PlexMoviesDataSource } from "./datsources/plex-movies";
 import { PlexMovieResolver } from "./resolvers/plex-movies";
+import { PlexTvShowsResolver } from "./resolvers/plex-tv-shows";
 
 @Resolver()
 class HelloResolver {
@@ -16,13 +17,10 @@ class HelloResolver {
   }
 }
 
-
-
-
 const main = async () => {
   env.config()
   const schema = await buildSchema({
-    resolvers: [HelloResolver, MovieResolver, PlexMovieResolver]
+    resolvers: [HelloResolver, MovieResolver, PlexMovieResolver, PlexTvShowsResolver]
   });
 
   const apolloServer = new ApolloServer({ schema, dataSources: () => ({
