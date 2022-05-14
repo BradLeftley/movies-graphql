@@ -11,5 +11,7 @@ export class GreenSatoshi {
   @Field()
   imageUrl: string; 
   @Field()
-  priceDifference: string
+  priceDifference: string;
+  @Field()
+  priceDifferenceHour: string
 }
