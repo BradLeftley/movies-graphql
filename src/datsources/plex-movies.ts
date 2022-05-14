@@ -39,5 +39,7 @@ export class PlexMoviesDataSource extends RESTDataSource {
         movie._attributes.image = 'https://image.tmdb.org/t/p/w220_and_h330_face/'+ url
       return  movie._attributes
      });
+
+     
   }
 }

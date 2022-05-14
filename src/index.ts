@@ -8,6 +8,9 @@ import * as env from "dotenv"
 import { PlexMoviesDataSource } from "./datsources/plex-movies";
 import { PlexMovieResolver } from "./resolvers/plex-movies";
 import { PlexTvShowsResolver } from "./resolvers/plex-tv-shows";
+import { GreenSatoshiResolver } from "./resolvers/green-satoshi";
+import { GreenSatoshiDatasource } from "./datsources/green-satoshi";
+import { PlexMovieWatchListDataSource } from "./datsources/plex-watch-list";
 
 @Resolver()
 class HelloResolver {
@@ -20,12 +23,14 @@ class HelloResolver {
 const main = async () => {
   env.config()
   const schema = await buildSchema({
-    resolvers: [HelloResolver, MovieResolver, PlexMovieResolver, PlexTvShowsResolver]
+    resolvers: [HelloResolver, MovieResolver, PlexMovieResolver, PlexTvShowsResolver, GreenSatoshiResolver]
   });
 
   const apolloServer = new ApolloServer({ schema, dataSources: () => ({
     movieDataSource: new MovieDataSource(),
     plexDataSource: new PlexMoviesDataSource(),
+    greenSatoshiDataSource: new GreenSatoshiDatasource(),
+    plexMovieWatchListDataSource: new PlexMovieWatchListDataSource()
   }),
   });
 

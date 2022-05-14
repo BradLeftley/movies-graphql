@@ -3,11 +3,18 @@ import { PlexMovieResolver } from "./resolvers/plex-movies";
 import { PlexTvShowsResolver } from "./resolvers/plex-tv-shows";
 import { MovieResolver } from "./resolvers/movies";
 
-const { resolvers, typeDefs } = await buildTypeDefsAndResolvers({
-  resolvers: [MovieResolver, PlexMovieResolver, PlexTvShowsResolver],
-})
+// const { resolvers, typeDefs } = await buildTypeDefsAndResolvers({
+//   resolvers: [MovieResolver, PlexMovieResolver, PlexTvShowsResolver],
+// })
 
+const schema = await buildSchema({
+  resolvers: [HelloResolver, MovieResolver, PlexMovieResolver, PlexTvShowsResolver]
+});
 
-const server = new ApolloServer({ typeDefs, resolvers, csrfPrevention: true });
+const apolloServer = new ApolloServer({ csrfPrevention: true, schema, dataSources: () => ({
+  movieDataSource: new MovieDataSource(),
+  plexDataSource: new PlexMoviesDataSource(),
+}),
+},);
 
-exports.graphqlHandler = server.createHandler();
+exports.graphqlHandler = apolloServer.createHandler();
