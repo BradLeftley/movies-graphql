@@ -26,6 +26,8 @@ const main = async () => {
     resolvers: [HelloResolver, MovieResolver, PlexMovieResolver, PlexTvShowsResolver, GreenSatoshiResolver]
   });
 
+  console.log(schema)
+
   const apolloServer = new ApolloServer({ schema, dataSources: () => ({
     movieDataSource: new MovieDataSource(),
     plexDataSource: new PlexMoviesDataSource(),

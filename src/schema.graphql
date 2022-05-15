@@ -1,0 +1,38 @@
+type Query {
+  movie: [Movie!]!
+  searchMovies(query: String!): [Movie!]!
+  plexmovie: [PlexMovie!]!
+  plexmoviewatchlist: [PlexMovie!]!
+  plextvshows: [PlexTvShow!]!
+  greensatoshi: GreenSatoshi!
+  helloWorld: String!
+}
+
+type Movie {
+  id: Float!
+  title: String!
+  overview: String!
+  poster_path: String!
+  vote_average: Float!
+}
+
+type PlexMovie {
+  title: String!
+  overview: String!
+  image: String!
+}
+
+type PlexTvShow {
+  title: String!
+  updatedAt: String!
+  image: String!
+}
+
+type GreenSatoshi {
+  name: String!
+  symbol: String!
+  price: String!
+  imageUrl: String!
+  priceDifference: String!
+  priceDifferenceHour: String!
+}
