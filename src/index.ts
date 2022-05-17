@@ -23,8 +23,10 @@ class HelloResolver {
 const main = async () => {
   env.config()
   const schema = await buildSchema({
-    resolvers: [HelloResolver, MovieResolver, PlexMovieResolver, PlexTvShowsResolver, GreenSatoshiResolver]
+    resolvers: [HelloResolver, MovieResolver, PlexMovieResolver, PlexTvShowsResolver, GreenSatoshiResolver],
+    emitSchemaFile: 'schema/movies.gql'
   });
+
 
   console.log(schema)
 
