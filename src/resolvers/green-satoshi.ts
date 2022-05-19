@@ -6,7 +6,6 @@ import { Ctx, Query, Resolver } from "type-graphql";
 export class GreenSatoshiResolver {
   @Query(() => GreenSatoshi)
   async greensatoshi(@Ctx() context: Context) {
-    console.log("WORKING", context.dataSources)
 
     const crypto = await context.dataSources.greenSatoshiDataSource.getGreenSatoshi();
 

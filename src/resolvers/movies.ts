@@ -6,14 +6,10 @@ import { Arg, Ctx, Query, Resolver } from "type-graphql";
 export class MovieResolver {
   @Query(() => [Movie])
   async movie(@Ctx() context: Context) {
-    console.log("WORKING")
-    const startTime = new Date();
+
 
     const movies = await context.dataSources.movieDataSource.getMovie();
-    console.log(movies)
-    console.log(
-      `todos query took ${new Date().getTime() - startTime.getTime()}ms`
-    );
+
     return movies;
   }
   @Query(() => [Movie])

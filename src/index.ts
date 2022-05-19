@@ -28,7 +28,6 @@ const main = async () => {
   });
 
 
-  console.log(schema)
 
   const apolloServer = new ApolloServer({ schema, dataSources: () => ({
     movieDataSource: new MovieDataSource(),
