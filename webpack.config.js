@@ -2,7 +2,7 @@ const nodeExternals = require('webpack-node-externals');
 const serverlessWebpack = require('serverless-webpack');
 
 module.exports = {
-  devtool: 'eval-cheap-module-source-map',
+  devtool: 'inline-cheap-module-source-map',
   entry: serverlessWebpack.lib.entries,
   mode: serverlessWebpack.lib.webpack.isLocal ? 'development' : 'production',
   
