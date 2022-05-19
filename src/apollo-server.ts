@@ -17,52 +17,9 @@ import { GreenSatoshiDatasource } from './datsources/green-satoshi';
 import { PlexMovieWatchListDataSource } from './datsources/plex-watch-list';
 import { PlexTvShowsResolver } from "./resolvers/plex-tv-shows";
 import { PlexMovieResolver } from './resolvers/plex-movies';
-
-
-// export const buildHandler = async () => {
-//   const { resolvers, typeDefs } = await buildTypeDefsAndResolvers({
-//     resolvers: [MovieResolver, PlexMovieResolver, PlexTvShowsResolver, GreenSatoshiResolver]
-//   })
-
-
-//   await buildSchema ({
-//     resolvers: [MovieResolver, PlexMovieResolver, PlexTvShowsResolver, GreenSatoshiResolver],
-//     emitSchemaFile: 'schemas/movies.gql'
-//   })
-
-//   const server = new ApolloServer({
-//     resolvers,
-//     typeDefs,
-//     dataSources: () => ({
-//       movieDataSource: new MovieDataSource(),
-//       plexDataSource: new PlexMoviesDataSource(),
-//       greenSatoshiDataSource: new GreenSatoshiDatasource(),
-//       plexMovieWatchListDataSource: new PlexMovieWatchListDataSource()
-//     })
-//   })
-
-//   return {
-//     handler
-//   }
-// }
-
-// const main = async () => {
-//   const schema = await buildSchema({
-//     resolvers: [ MovieResolver, PlexMovieResolver, PlexTvShowsResolver, GreenSatoshiResolver]
-//   });
-
-//   console.log(schema)
-
-//   const apolloServer = new ApolloServer({ schema, dataSources: () => ({
-//     movieDataSource: new MovieDataSource(),
-//     plexDataSource: new PlexMoviesDataSource(),
-//     greenSatoshiDataSource: new GreenSatoshiDatasource(),
-//     plexMovieWatchListDataSource: new PlexMovieWatchListDataSource()
-//   }),
-//   });
-
-//   await apolloServer.start()
-// };
+import { ApolloServer } from "apollo-server-lambda";
+import { buildSchema } from "type-graphql";
+import { MovieResolver } from "./resolvers/movies";
 
 export const typeDefs = gql`
 type GreenSatoshi {
@@ -115,11 +72,56 @@ export const resolvers = {
 };
 
 
-const server = new ApolloServer({ resolvers, typeDefs, dataSources: () => ({
-  movieDataSource: new MovieDataSource(),
-  plexDataSource: new PlexMoviesDataSource(),
-  greenSatoshiDataSource: new GreenSatoshiDatasource(),
-  plexMovieWatchListDataSource: new PlexMovieWatchListDataSource()
-}), csrfPrevention: true });
+// const server = new ApolloServer({ resolvers, typeDefs, dataSources: () => ({
+//   movieDataSource: new MovieDataSource(),
+//   plexDataSource: new PlexMoviesDataSource(),
+//   greenSatoshiDataSource: new GreenSatoshiDatasource(),
+//   plexMovieWatchListDataSource: new PlexMovieWatchListDataSource()
+// }), csrfPrevention: true });
 
-export const graphqlHandler = server.createHandler();
+
+// const x = async (): Promise<typeof ApolloServer> => {
+
+//   // const server = new ApolloServer({ resolvers, typeDefs, dataSources: () => ({
+//   //   movieDataSource: new MovieDataSource(),
+//   //   plexDataSource: new PlexMoviesDataSource(),
+//   //   greenSatoshiDataSource: new GreenSatoshiDatasource(),
+//   //   plexMovieWatchListDataSource: new PlexMovieWatchListDataSource()
+//   // }), csrfPrevention: true });
+
+//  const schema =  await buildSchema({
+//     resolvers: [MovieResolver],
+//     emitSchemaFile: 'schemas/adviser.gql',
+//   })
+  
+//   return schema
+// }
+
+
+
+//  const server = new ApolloServer({ x, dataSources: () => ({
+//     movieDataSource: new MovieDataSource(),
+//     plexDataSource: new PlexMoviesDataSource(),
+//     greenSatoshiDataSource: new GreenSatoshiDatasource(),
+//     plexMovieWatchListDataSource: new PlexMovieWatchListDataSource()
+//   }), csrfPrevention: true });
+
+
+// export const graphqlHandler = server.createHandler();
+
+const globalSchema = buildSchema({
+    resolvers: [MovieResolver]
+});
+
+async function getServer() {
+    const schema = await globalSchema;
+    return new ApolloServer({
+        schema
+    });
+}
+
+export function graphqlHandler(event: any, ctx: any, callback: any) {
+    getServer()
+        .then(server => server.createHandler())
+        .then(handler => handler(event, ctx, callback))
+}

@@ -8,7 +8,7 @@ export class GreenSatoshiDatasource extends RESTDataSource {
 
   async getGreenSatoshi(): Promise<GreenSatoshi> {
     const greensatoshi = await this.get('/api/v3/coins/green-satoshi-token')
-    // console.log("API RETURNED", greensatoshi)
+     console.log("API RETURNED", greensatoshi)
    
    const name = greensatoshi.name
    const symbol = greensatoshi.symbol

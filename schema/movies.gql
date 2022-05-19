@@ -34,7 +34,6 @@ type PlexTvShow {
 
 type Query {
   greensatoshi: GreenSatoshi!
-  helloWorld: String!
   movie: [Movie!]!
   plexmovie: [PlexMovie!]!
   plexmoviewatchlist: [PlexMovie!]!
