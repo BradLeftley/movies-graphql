@@ -19,6 +19,7 @@
     "class-validator": "^0.13.2",
     "dotenv": "^16.0.0",
     "graphql": "^15.3.0",
+    "graphql-playground-middleware-lambda": "^1.7.24",
     "nodemon": "^2.0.15",
     "ramda": "^0.28.0",
     "reflect-metadata": "^0.1.13",
