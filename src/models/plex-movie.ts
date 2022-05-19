@@ -4,7 +4,7 @@ import { Field, ObjectType } from "type-graphql";
 export class PlexMovie {
   @Field()
   title: string;
-  @Field()
+  @Field({ nullable: true })
   overview: string;
   @Field()
   image: string
