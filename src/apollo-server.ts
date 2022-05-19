@@ -134,11 +134,12 @@ import { PlexMoviesDataSource } from "./datsources/plex-movies";
 import { PlexMovieWatchListDataSource } from "./datsources/plex-watch-list";
 import { PlexMovieResolver } from "./resolvers/plex-movies";
 import { GreenSatoshiResolver } from "./resolvers/green-satoshi";
+import { PlexTvShowsResolver } from "./resolvers/plex-tv-shows";
 
 
 export const server = new ApolloServer({
     schema: buildSchemaSync({
-        resolvers: [MovieResolver, PlexMovieResolver, GreenSatoshiResolver, PlexMovieWatchListDataSource],
+        resolvers: [MovieResolver, PlexMovieResolver, PlexTvShowsResolver, GreenSatoshiResolver, PlexMovieWatchListDataSource],
     }),
     dataSources: () => ({
         movieDataSource: new MovieDataSource(),
