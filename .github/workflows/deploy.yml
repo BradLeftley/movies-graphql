@@ -29,3 +29,10 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+          API_KEY: ${{ secrets.API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          MEDIA_URL: ${{ secrets.MEDIA_URL }}
+          PLEX_META_URL: ${{ secrets.PLEX_META_URL }}
+          PLEX_MOVIE_STUFF: ${{ secrets.PLEX_MOVIE_STUFF }}
+          PLEX_TV_SHOW: ${{ secrets.PLEX_TV_SHOW }}
+          PLEX_WATCH_LIST: ${{ secrets.PLEX_WATCH_LIST }}
