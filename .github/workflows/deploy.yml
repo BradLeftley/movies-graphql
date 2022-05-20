@@ -22,8 +22,6 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
-      - run: yarn lint
-
       - name: Serverless Deploy
         id: serverless_deploy
         run: npx serverless deploy --stage
