@@ -11,5 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - name: deploy
-        run: yarn deploy
+      - uses: actions/checkout@v2
+      - uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: deploy # will run `yarn install` command
