@@ -26,7 +26,6 @@
     "ramda": "^0.28.0",
     "reflect-metadata": "^0.1.13",
     "serverless": "^3.11.0",
-    "serverless-dotenv-plugin": "^4.0.1",
     "serverless-webpack": "^5.7.1",
     "ts-loader": "^9.3.0",
     "type-graphql": "^1.1.0",
