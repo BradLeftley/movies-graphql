@@ -12,8 +12,10 @@ import { PlexMovieWatchListDataSource } from "./datsources/plex-watch-list";
 import { PlexMovieResolver } from "./resolvers/plex-movies";
 import { GreenSatoshiResolver } from "./resolvers/green-satoshi";
 import { PlexTvShowsResolver } from "./resolvers/plex-tv-shows";
+import * as env from "dotenv"
 
 
+env.config()
 export const server = new ApolloServer({
     schema: buildSchemaSync({
         resolvers: [MovieResolver, PlexMovieResolver, PlexTvShowsResolver, GreenSatoshiResolver, PlexMovieWatchListDataSource],
