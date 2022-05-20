@@ -1,17 +1,29 @@
-name: Deployment
+name: Deploy master branch
 
 on:
   push:
     branches:
-      - main
+      - master
       - attempt-deployment
 
 jobs:
-  deployment:
+  deploy:
+    name: deploy
     runs-on: ubuntu-latest
-    environment: production
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x]
     steps:
       - uses: actions/checkout@v2
-      - uses: borales/actions-yarn@v2.3.0
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
         with:
-          cmd: deploy # will run `yarn install` command
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - name: serverless deploy
+        uses: serverless/github-action@v3
+        with:
+          args: deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
