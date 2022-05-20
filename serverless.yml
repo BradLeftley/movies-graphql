@@ -1,4 +1,6 @@
 # serverless.yml
+useDotenv: true
+
 service: demo-apollo-server-lambda
 provider:
   name: aws
