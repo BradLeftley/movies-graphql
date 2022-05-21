@@ -1,4 +1,6 @@
 # serverless.yml
+useDotenv: true
+
 service: demo-apollo-server-lambda
 provider:
   name: aws
@@ -20,6 +22,7 @@ plugins:
   - serverless-webpack
   - serverless-offline
   - serverless-dotenv-plugin
+
 custom:
   webpack:
     includeModules: true
