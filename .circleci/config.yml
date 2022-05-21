@@ -9,6 +9,9 @@ jobs:
       - checkout
       - aws-cli/setup
       - serverless-framework/setup
+      - run: 
+        command: serverless plugin install -n serverless-webpack
+        name: install webpack
       - run:
           command: serverless deploy --stage production --org=bradleftley
           name: deploy
