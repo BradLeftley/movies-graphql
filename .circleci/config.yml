@@ -1,21 +1,19 @@
 version: 2.1
 orbs:
-  aws-cli: circleci/aws-cli@3.1
-  serverless-framework: circleci/serverless-framework@2.0
+  node: circleci/node@5.0.2
 jobs:
-  deploy:
-    executor: serverless-framework/default
+  install-node-example:
+    docker:
+      - image: 'cimg/base:stable'
     steps:
       - checkout
-      - aws-cli/setup
-      - serverless-framework/setup
-      - run: 
-          command: serverless plugin install -n serverless-webpack
-          name: install webpack
-      - run:
-          command: serverless deploy --stage production --org=bradleftley
-          name: deploy
+      - node/install:
+          install-yarn: true
+          node-version: '16.13'
+      - run: node --version
+      - run: yarn deploy
+
 workflows:
-  deploy:
+  test_my_app:
     jobs:
-      - deploy
+      - install-node-example
