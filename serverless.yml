@@ -1,3 +1,5 @@
+org: bradleftley
+app: demo-apollo-server-lambda
 # serverless.yml
 useDotenv: true
 
