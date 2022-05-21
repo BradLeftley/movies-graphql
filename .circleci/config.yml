@@ -10,7 +10,7 @@ jobs:
       - aws-cli/setup
       - serverless-framework/setup
       - run:
-          command: serverless deploy -v
+          command: serverless deploy --stage production --org=bradleftley
           name: deploy
 workflows:
   deploy:
