@@ -11,7 +11,7 @@ jobs:
       - serverless-framework/setup
       - run: yarn add serverless-webpack
       - run:
-          command: serverless deploy -v
+          command: serverless deploy --stage production -v
           name: deploy
 workflows:
   deploy:
