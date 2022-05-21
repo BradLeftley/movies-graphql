@@ -6,6 +6,7 @@ provider:
   name: aws
   runtime: nodejs14.x
   region: eu-west-2
+  environment:
 functions:
   graphql:
     handler: src/apollo-server.graphqlHandler
@@ -21,6 +22,7 @@ functions:
 plugins:
   - serverless-webpack
   - serverless-offline
+  - serverless-dotenv-plugin
 
 custom:
   webpack:

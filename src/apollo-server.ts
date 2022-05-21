@@ -3,7 +3,6 @@
 import "reflect-metadata";
 // import {ApolloServer} from "apollo-server-lambda";
 import {buildSchemaSync} from 'type-graphql';
-import lambdaPlayground from "graphql-playground-middleware-lambda";
 import { MovieResolver } from "./resolvers/movies";
 import { MovieDataSource } from "./datsources/movies";
 import { GreenSatoshiDatasource } from "./datsources/green-satoshi";
@@ -26,13 +25,19 @@ export const server = new ApolloServer({
           greenSatoshiDataSource: new GreenSatoshiDatasource(),
           plexMovieWatchListDataSource: new PlexMovieWatchListDataSource()
       }),
-      csrfPrevention: true,
-    introspection: true
+    csrfPrevention: true,
+    introspection: true,
+    cors: {
+      origin: ["http://dashboard.bradleyleftley.co.uk"]
+    },
 });
 
 
-export const graphqlHandler = server.createHandler();
+export const graphqlHandler = server.createHandler(
+  {
+    cors: {
+      origin: 'dashboard.bradleyleftley.co.uk',
+    },
+  }
+);
 
-export const playground = lambdaPlayground({
-    endpoint: '/graphql'
-});
