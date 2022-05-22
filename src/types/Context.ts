@@ -1,3 +1,4 @@
+import { CryptoDataDatasource } from "src/datsources/crypto-data";
 import { GreenSatoshiDatasource } from "src/datsources/green-satoshi";
 import { MovieDataSource } from "src/datsources/movies";
 import { PlexMoviesDataSource } from "src/datsources/plex-movies";
@@ -8,5 +9,6 @@ export interface Context {
     plexDataSource: PlexMoviesDataSource;
     greenSatoshiDataSource: GreenSatoshiDatasource;
     plexMovieWatchListDataSource: PlexMovieWatchListDataSource;
+    cryptoDataDataSource: CryptoDataDatasource;
   };
 }

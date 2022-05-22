@@ -12,18 +12,21 @@ import { PlexMovieResolver } from "./resolvers/plex-movies";
 import { GreenSatoshiResolver } from "./resolvers/green-satoshi";
 import { PlexTvShowsResolver } from "./resolvers/plex-tv-shows";
 import * as env from "dotenv"
+import { CryptoDataDatasource } from "./datsources/crypto-data";
+import { CryptoDataResolver } from "./resolvers/crypto-data";
 
 
 env.config()
 export const server = new ApolloServer({
     schema: buildSchemaSync({
-        resolvers: [MovieResolver, PlexMovieResolver, PlexTvShowsResolver, GreenSatoshiResolver, PlexMovieWatchListDataSource],
+        resolvers: [CryptoDataResolver, MovieResolver, PlexMovieResolver, PlexTvShowsResolver, GreenSatoshiResolver, PlexMovieWatchListDataSource],
     }),
     dataSources: () => ({
         movieDataSource: new MovieDataSource(),
           plexDataSource: new PlexMoviesDataSource(),
           greenSatoshiDataSource: new GreenSatoshiDatasource(),
-          plexMovieWatchListDataSource: new PlexMovieWatchListDataSource()
+          plexMovieWatchListDataSource: new PlexMovieWatchListDataSource(),
+          cryptoDataDataSource: new CryptoDataDatasource()
       }),
     csrfPrevention: true,
     introspection: true,
